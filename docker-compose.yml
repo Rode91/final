@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+
+  v1:
+    build: ./v1
+    container_name: v1
+    ports:
+      - "3002:3000"
+
+  v2:
+    build: ./v2
+    container_name: v2
+    ports:
+      - "3003:3000"
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "3000:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - v1
+      - v2
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+      - v2
