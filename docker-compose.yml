@@ -44,7 +44,9 @@ services:
       - prometheus
 
   jenkins:
-    image: jenkins/jenkins:lts
+    build:
+      context: .
+      dockerfile: Dockerfile-jenkins
     container_name: jenkins
     ports:
       - "8080:8080"
