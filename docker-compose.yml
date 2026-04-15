@@ -17,13 +17,12 @@ services:
       - app-network
 
   nginx:
-    image: nginx:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
     container_name: nginx
     ports:
       - "3000:80"
-    configs:
-      - source: nginx_config
-        target: /etc/nginx/nginx.conf
     depends_on:
       - v1
       - v2
@@ -31,15 +30,14 @@ services:
       - app-network
 
   prometheus:
-    image: prom/prometheus
+    build:
+      context: .
+      dockerfile: Dockerfile.prometheus
     container_name: prometheus
     ports:
       - "9090:9090"
-    command:
-      - "--config.file=/etc/prometheus/prometheus.yml"
-    configs:
-      - source: prometheus_config
-        target: /etc/prometheus/prometheus.yml
+    depends_on:
+      - v2
     networks:
       - app-network
 
@@ -73,12 +71,6 @@ services:
 
 volumes:
   jenkins_home:
-
-configs:
-  prometheus_config:
-    file: ./prometheus/prometheus.yml
-  nginx_config:
-    file: ./nginx/nginx.conf
 
 networks:
   app-network:
