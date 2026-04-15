@@ -11,7 +11,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sh 'docker-compose up -d --no-deps v1 v2 nginx prometheus grafana'
+                sh 'cd /var/jenkins_home/workspace/final && docker-compose up -d --no-deps v1 v2 nginx prometheus grafana'
             }
         }
 
