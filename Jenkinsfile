@@ -19,7 +19,7 @@ pipeline {
             steps {
                 script {
                     def response = sh(
-                        script: "curl -s http://prometheus:9090/api/v1/query?query=app_errors_total",
+                        script: "curl -s http://localhost:9090/api/v1/query?query=app_errors_total",
                         returnStdout: true
                     ).trim()
 
