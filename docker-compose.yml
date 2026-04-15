@@ -21,8 +21,9 @@ services:
     container_name: nginx
     ports:
       - "3000:80"
-    volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    configs:
+      - source: nginx_config
+        target: /etc/nginx/nginx.conf
     depends_on:
       - v1
       - v2
@@ -76,6 +77,8 @@ volumes:
 configs:
   prometheus_config:
     file: ./prometheus/prometheus.yml
+  nginx_config:
+    file: ./nginx/nginx.conf
 
 networks:
   app-network:
