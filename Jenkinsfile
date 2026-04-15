@@ -17,9 +17,15 @@ pipeline {
 
         stage('Check Metrics') {
             steps {
-                sh 'curl -s http://prometheus:9090/-/ready'
+                script {
+                    def response = sh(
+                        script: "curl -s http://prometheus:9090/api/v1/query?query=app_errors_total",
+                        returnStdout: true
+                    ).trim()
+
+                    echo "Respuesta de Prometheus:"
+                    echo response
             }
         }
-
     }
 }
