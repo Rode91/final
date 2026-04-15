@@ -15,5 +15,11 @@ pipeline {
             }
         }
 
+        stage('Check Metrics') {
+            steps {
+                sh 'curl -s http://prometheus:9090/-/ready'
+            }
+        }
+
     }
 }
