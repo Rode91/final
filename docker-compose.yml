@@ -34,10 +34,11 @@ services:
     container_name: prometheus
     ports:
       - "9090:9090"
-    volumes:
-      - ./prometheus:/etc/prometheus
-    depends_on:
-      - v2
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+    configs:
+      - source: prometheus_config
+        target: /etc/prometheus/prometheus.yml
     networks:
       - app-network
 
@@ -71,6 +72,10 @@ services:
 
 volumes:
   jenkins_home:
+
+configs:
+  prometheus_config:
+    file: ./prometheus/prometheus.yml
 
 networks:
   app-network:
