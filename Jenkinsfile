@@ -25,7 +25,9 @@ pipeline {
 
                     echo "Respuesta de Prometheus:"
                     echo response
+                }
             }
         }
+
     }
 }
