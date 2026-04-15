@@ -18,8 +18,16 @@ pipeline {
         stage('Check Metrics') {
             steps {
                 script {
+                    sh '''
+                    for i in 1 2 3 4 5 6 7 8 9 10; do
+                      curl -s http://prometheus:9090/-/ready && break
+                      echo "Esperando a Prometheus..."
+                      sleep 3
+                    done
+                    '''
+
                     def response = sh(
-                        script: "curl -s http://prometheus:9090/api/v1/query?query=app_errors_total",
+                        script: 'curl -s http://prometheus:9090/api/v1/query?query=app_errors_total',
                         returnStdout: true
                     ).trim()
 
